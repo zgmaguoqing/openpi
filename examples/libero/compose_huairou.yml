@@ -41,7 +41,7 @@ services:
       - ${OPENPI_DATA_HOME:-~/.cache/openpi}:/openpi_assets
     environment:
       - SERVER_ARGS
-      - OPENPI_DATA_HOME=/data0/share/projects/Arm/openpi/.cache/openpi #/openpi_assets
+      - OPENPI_DATA_HOME=/openpi_assets #/data0/share/projects/Arm/openpi/.cache/openpi #/openpi_assets
       - IS_DOCKER=true
 
     # Comment out this block if not running on a machine with GPUs.

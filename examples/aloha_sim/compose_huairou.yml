@@ -1,6 +1,21 @@
 # Run with:
-# docker compose -f scripts/docker/compose.yml up --build
+# docker compose -f examples/aloha_sim/compose.yml up --build
 services:
+  runtime:
+    image: aloha_sim
+    depends_on:
+      - openpi_server
+    build:
+      context: ../..
+      dockerfile: examples/aloha_sim/Dockerfile_huairou
+    init: true
+    tty: true
+    network_mode: host
+    privileged: true
+    volumes:
+      - $PWD:/app
+      - /data0:/data
+
   openpi_server:
     image: openpi_server
     build:
@@ -9,14 +24,12 @@ services:
     init: true
     tty: true
     network_mode: host
-    # Populate configured openpi data home to /openpi_assets inside the container.
-    # Populate aws credential inside the container.
     volumes:
       - $PWD:/app
       - ${OPENPI_DATA_HOME:-~/.cache/openpi}:/openpi_assets
     environment:
       - SERVER_ARGS
-      - OPENPI_DATA_HOME=/openpi_assets
+      - OPENPI_DATA_HOME=/data0/share/projects/Arm/openpi/.cache/openpi #/openpi_assets
       - IS_DOCKER=true
 
     # Comment out this block if not running on a machine with GPUs.

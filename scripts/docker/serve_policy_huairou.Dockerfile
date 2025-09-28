@@ -35,4 +35,5 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 COPY src/openpi/models_pytorch/transformers_replace/ /tmp/transformers_replace/
 RUN /.venv/bin/python -c "import transformers; print(transformers.__file__)" | xargs dirname | xargs -I{} cp -r /tmp/transformers_replace/* {} && rm -rf /tmp/transformers_replace
 
-CMD /bin/bash -c "uv run scripts/serve_policy.py $SERVER_ARGS"
+#CMD /bin/bash -c "ls /openpi_assets/"
+CMD /bin/bash -c "uv run scripts/serve_policy_huairou.py $SERVER_ARGS"
