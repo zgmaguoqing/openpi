@@ -69,3 +69,36 @@ checkpoint was trained in openpi with the `pi05_libero` config.
 | Model | Libero Spatial | Libero Object | Libero Goal | Libero 10 | Average |
 |-------|---------------|---------------|-------------|-----------|---------|
 | π0.5 @ 30k (finetuned) | 98.8 | 98.2 | 98.0 | 92.4 | 96.85
+
+
+## 自定义测试（指定任务和任务描述）
+
+`main_custom.py` 是基于原始 `main.py` 的增强版本，支持用户自定义任务描述和指定特定任务ID。
+
+新增功能
+
+### 1. 自定义任务描述
+- 通过 `--custom-description` 参数可以指定自定义的任务描述
+- 如果未指定或为空，则使用原始任务的语言描述
+
+### 2. 指定特定任务
+- 通过 `--specific-task-id` 参数可以指定运行特定任务ID
+- 设置为 -1 时运行所有任务（默认行为）
+- 设置为 0 或正整数时只运行指定的任务
+
+使用方法
+
+```bash
+# 指定任务套件、任务ID和自定义描述
+python main_custom.py \
+    --task-suite-name libero_object \
+    --specific-task-id 3 \
+    --custom-description "将物体移动到指定位置" \
+    --num-trials-per-task 10
+
+python main_custom.py \
+    --task-suite-name libero_10 \
+    --specific-task-id 3 \
+    --custom-description "put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate" \
+    --num-trials-per-task 10
+```
